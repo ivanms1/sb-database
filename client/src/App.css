@@ -1,0 +1,48 @@
+.App {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+};
+
+.login-form {
+  width: 40vw;
+}
+
+.contacts {
+
+}
+
+.contacts-grid {
+  display: grid;
+  width: 90vw;
+  grid-gap: 0;
+  grid-template-columns: repeat(8, 1fr);
+  border: 1px solid #000;
+}
+
+.contacts-grid p {
+  margin: 0;
+  border-top: 1px solid #000;
+  border-right: 1px solid #000;
+  text-align: center; 
+}
+
+.contacts-grid .input {
+  margin: 0;
+  border-top: 1px solid #000;
+  border-right: 1px solid #000;
+  text-align: center; 
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border-top: 1px solid #000;
+}
+
+.buttons button {
+  margin: 1%;
+}
