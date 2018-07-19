@@ -1,9 +1,13 @@
 const express = require('express');
+
 const router = express.Router();
 const Contact = require('../models/Contact');
 
 router.get('/', (req, res) => {
-	Contact.find({})
+	Contact.find({},
+		null,
+		{ sort: { name: 1 }
+	})
 	.then(users => {
 		res.json(users);
 	})
@@ -23,7 +27,7 @@ router.post('/', (req, res) => {
 	
 	new Contact(contact).save()
 		.then(contact => res.json(contact))
-		.catch(err => res.status(400).send(err));
+		.catch(err => res.status(400).json(err));
 
 });
 
@@ -47,11 +51,9 @@ router.put('/:contactId', (req, res) => {
 	if(req.body.muban !== undefined) update.muban = req.body.muban;
 	if(req.body.tambon !== undefined) update.tambon = req.body.tambon;
 	if(req.body.organization !== undefined) update.organization = req.body.organization;
-	console.log(update);
-
+	
 	Contact.findByIdAndUpdate(req.params.contactId, { $set: update }, { new: true })
 	.then(contact => {
-		console.log(contact)
 		if(!contact) return res.status(404).json({msg: 'Contact not found' });
 		res.json(contact);
 	})

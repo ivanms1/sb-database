@@ -1,46 +1,51 @@
-import React, { Component } from 'react';
-import { Link } from "react-router-dom";
+import React from 'react';
+import { connect } from 'react-redux';
+import { Field, reduxForm } from 'redux-form';
+import { Redirect } from "react-router-dom";
+import { successReq, sendLogin } from '../actions';
 
-export default class Login extends Component {
-	state = {
-		email: "",
-		password: ""
-	}
 
-	handleChange = this.handleChange.bind(this);
+const renderInput = ({input, meta, name, label, type}) => (
+    <div className="input-field">
+        <input id={name} type={type} required="true" className="validate" {...input}/>
+        <label htmlFor={name} >{label}</label>
+        <span className="helper-text" data-error={`Invalid ${label}`} data-success=""></span>
+    </div>
+)
 
-	handleChange(e){
-		const target = e.target;
-    	const value = target.value;
-    	const name = target.name;
-
-    	this.setState({
-      		[name]: value
-    	});
-
-	}
-	render() {
+let Login = ({getContactData, redirect, handleSubmit, values, sendLogin}) => {
+    function login(values){
+      sendLogin(values)
+    }
 		return (
-			<form className="login-form">
-				<div className="input-field col s6">
-          			<input name="email"
-          				id="email" 
-          				value={this.state.email}
-          				onChange={this.handleChange}
-          				type="email" className="validate"/>
-          			<label htmlFor="email">Email</label>
-        		</div>
-        		<div className="input-field col s6">
-          			<input name="password"
-          				id="password"
-          				value={this.state.password}
-          				onChange={this.handleChange}
-          				type="password"
-          				className="validate"/>
-          			<label htmlFor="password">Password</label>
-          			<Link to="/contacts">Submit</Link>
-        		</div>
-			</form>
+      <React.Fragment>
+        <h3 className="login-title">SB Database</h3>
+  			<form className="edit-form" onSubmit={handleSubmit((values) => login(values))}>
+            <Field name='email' type="email" label="Email" component={renderInput} />
+            <Field name="password" type="password" label="Password" component={renderInput}/>
+        <div className="edit-buttons">
+            <button className="btn waves-effect waves-light z-depth-5" type="submit">Submit</button>
+          </div>
+    </form>
+    {
+      redirect ? <Redirect to='/contacts'/>
+      :
+      null
+    }
+      </React.Fragment>
 		);
-	}
-}
+};
+
+Login = reduxForm({
+  form: 'login',
+  enableReinitialize: true
+})(Login)
+
+Login = connect(
+  state => ({
+    redirect: state.contactData.success
+  }),
+  { successReq, sendLogin }
+  )(Login)
+
+export default Login;
