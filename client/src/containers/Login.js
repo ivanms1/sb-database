@@ -20,7 +20,7 @@ let Login = ({getContactData, redirect, handleSubmit, values, sendLogin}) => {
 		return (
       <React.Fragment>
         <h3 className="login-title">SB Database</h3>
-  			<form className="edit-form" onSubmit={handleSubmit((values) => login(values))}>
+  			<form className="login-form" onSubmit={handleSubmit((values) => login(values))}>
             <Field name='email' type="email" label="Email" component={renderInput} />
             <Field name="password" type="password" label="Password" component={renderInput}/>
         <div className="edit-buttons">

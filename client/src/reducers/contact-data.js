@@ -1,10 +1,11 @@
-import { CONTACT_DATA, FILTER_DATA, REDIRECT } from '../actions';
+import { CONTACT_DATA, FILTER_DATA, REDIRECT, LOGIN } from '../actions';
 
 const initialState = {
 	contacts: [],
 	filtered: null,
 	loadingData: true,
-	success: false
+	success: false,
+	loggedIn: false
 };
 
 const contactData = (
@@ -22,6 +23,10 @@ const contactData = (
 		case REDIRECT:
 			return state = {...state,
 							success: action.data
+							}
+		case LOGIN:
+			return state = {...state,
+							loggedIn: action.data
 							}
 		default:
 			return state;

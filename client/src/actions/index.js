@@ -7,6 +7,7 @@ export const CONTACT_DATA = "CONTACT_DATA";
 export const FILTER_DATA = "FILTER_DATA";
 export const SELECT_CONTACT = "SELECT_CONTACT";
 export const REDIRECT = "REDIRECT";
+export const LOGIN = "LOGIN";
 
 export function myAction() {
 	return {
@@ -102,8 +103,16 @@ export function sendLogin(user){
 			if(res.status === 200) {
 				dispatch(successReq(true))
 				dispatch(getContactData())
+				dispatch(logIn(true))
 			}
 		})
 		.catch(err => M.toast({html: err.response.data.msg}));
+	}
+}
+
+export function logIn(bool) {
+	return {
+		type: LOGIN,
+		data: bool
 	}
 }

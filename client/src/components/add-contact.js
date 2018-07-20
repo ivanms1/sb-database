@@ -2,17 +2,20 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { Link } from 'react-router-dom';
+import NotLogged from './not-logged';
 import M from 'materialize-css';
 
 import { addContact } from '../actions';
 
-let AddContact = ({ handleSubmit, addContact }) => {
+let AddContact = ({ handleSubmit, addContact, loggedIn }) => {
 
 	let addData = values => {
 		addContact(values);
 		M.toast({html: 'Contact Added'});
 	}
 	return(
+		loggedIn
+		?
 		<React.Fragment>
 		<div className="fixed-action-btn">
 		<Link to={`/contacts`} className="pulse z-depth-5 btn-floating btn-large waves-effect waves-light">Back</Link>	
@@ -52,6 +55,8 @@ let AddContact = ({ handleSubmit, addContact }) => {
       		</div>
 		</form>
 		</React.Fragment>
+		:
+		<NotLogged/>
 		)
 }
 
@@ -60,7 +65,9 @@ AddContact = reduxForm({
 })(AddContact)
 
 AddContact = connect(
-	null,
+	state => ({
+		loggedIn: state.contactData.loggedIn
+	}),
 	{addContact}
 )(AddContact)
 

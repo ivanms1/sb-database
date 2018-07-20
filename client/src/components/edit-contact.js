@@ -3,12 +3,12 @@ import { connect } from 'react-redux';
 import { Field, reduxForm, formValueSelector } from 'redux-form';
 import { Link, Redirect } from 'react-router-dom';
 import M from 'materialize-css';
-
+import NotLogged from './not-logged';
 import { updateContact, deleteContact, successReq } from '../actions';
 
 const selector = formValueSelector('editContact')
 
-let EditContact = ({handleSubmit, contactData, id, updateContact, deleteContact, redirect, successReq}) => {
+let EditContact = ({handleSubmit, contactData, id, updateContact, deleteContact, redirect, successReq, loggedIn}) => {
 	let sendData = (values, id) => {
 		updateContact(values, id);
 		M.toast({html: 'Contact Updated'});
@@ -22,6 +22,8 @@ let EditContact = ({handleSubmit, contactData, id, updateContact, deleteContact,
 	}
 
 	return(
+		loggedIn
+		?
 		<React.Fragment>
 		<div className="fixed-action-btn">
 		<Link to={`/contacts`} className="pulse z-depth-5 btn-floating btn-large waves-effect waves-light">Back</Link>	
@@ -66,6 +68,8 @@ let EditContact = ({handleSubmit, contactData, id, updateContact, deleteContact,
 			null
 		}
 		</React.Fragment>
+		:
+		<NotLogged/>
 		)
 }
 
@@ -86,7 +90,8 @@ EditContact = connect(
 								'tambon',
 								'organization'),
 		id: state.selectedContact.id,
-		redirect: state.contactData.success
+		redirect: state.contactData.success,
+		loggedIn: state.contactData.loggedIn
 	}),
 	{updateContact, deleteContact, successReq}
 )(EditContact)

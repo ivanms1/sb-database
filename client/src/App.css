@@ -14,6 +14,13 @@
   padding: 0 5%;
 }
 
+.not-logged-in{
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
+}
+
 .login-title {
   text-align: left;
 }
@@ -47,8 +54,11 @@
 .nav-wrapper form{
 }
 
-.edit-form {
-  width: 50vw;
+.login-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 table {
@@ -68,6 +78,10 @@ td {
     top: 0;
     width: 55px;
     height: 55px;
+}
+
+.edit-form {
+  width: 50vw;
 }
 
 .edit-buttons {

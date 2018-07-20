@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Contact from './contact';
 import M from 'materialize-css';
 import { Link } from 'react-router-dom';
+import NotLogged from './not-logged';
 import { getContactData, filterContacts, successReq } from '../actions';
 
 class ContactList extends Component {
@@ -60,7 +61,12 @@ class ContactList extends Component {
 	}
 
 	renderContent(){
-		if(!this.props.loading) {
+		if(!this.props.loggedIn) {
+			return(
+				<NotLogged/>				
+				)
+		}
+		if(!this.props.loading && this.props.loggedIn) {
 			return (
 				<React.Fragment>
 					<div className="contact-list-header">
@@ -163,7 +169,8 @@ function mapStateToProps(state) {
     return {
         contacts: state.contactData.contacts,
         filtered: state.contactData.filtered,
-        loading: state.contactData.loadingData
+        loading: state.contactData.loadingData,
+        loggedIn: state.contactData.loggedIn
         }
     }
     
