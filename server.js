@@ -1,5 +1,4 @@
 require('dotenv').config();
-const path = require('path')
 const express = require('express');
 const mongoose = require('mongoose');
 const logger = require('morgan');
@@ -13,7 +12,6 @@ const port = process.env.PORT || 3001;
 const app = express();
 let db = null;
 
-app.use( express.static( `${__dirname}/../build` ) );
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
